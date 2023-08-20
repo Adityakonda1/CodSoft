@@ -1,0 +1,92 @@
+import random
+
+services = {
+    "destinations": {
+        "name": "Explore destinations",
+        "sub_options": {
+            1: ["Tropical beaches", "Seaside escapes"],
+            2: ["Urban adventures", "Cultural city tours"],
+            3: ["Mountain getaways", "Hiking trails"],
+            0: "Back to main options"
+        }
+    },
+    "booking": {
+        "name": "Book a trip",
+        "sub_options": {
+            1: ["Domestic flights", "International flights"],
+            2: ["Luxury hotels", "Budget accommodations"],
+            3: ["Guided tours", "Self-guided trips"],
+            0: "Back to main options"
+        }
+    },
+    "activities": {
+        "name": "Discover activities",
+        "sub_options": {
+            1: ["City tours", "Landmark visits"],
+            2: ["Adventure sports", "Outdoor excursions"],
+            3: ["Museum visits", "Cultural experiences"],
+            0: "Back to main options"
+        }
+    },
+    "help": {
+        "name": "Get assistance",
+        "sub_options": {
+            1: ["Travel information", "Booking support", "Destination recommendations"],
+            0: "Back to main options"
+        }
+    },
+    "bye": {
+        "name": "Exit",
+        "sub_options": {
+            1: "Yes, I want to contact an agent",
+            2: "No, I'm satisfied with the response"
+        }
+    }
+}
+
+def display_services():
+    print("TravelBot: Here are the services I offer:")
+    for option_num, (option, service) in enumerate(services.items(), start=1):
+        print(f"{option_num}. {service['name']}")
+
+def display_sub_options(sub_options):
+    print("TravelBot: Here are the available options:")
+    for sub_option_num, sub_option in sub_options.items():
+        print(f"{sub_option_num}. {sub_option}")
+
+def main():
+    print("TravelBot: Hello! How can I assist you with your travel plans?")
+
+    while True:
+        display_services()
+        user_choice = int(input("You: "))
+
+        if user_choice == 0:
+            print("TravelBot: Have a great day!")
+            break
+        elif user_choice in range(1, len(services) + 1):
+            selected_service = list(services.keys())[user_choice - 1]
+            while True:
+                sub_options = services[selected_service]["sub_options"]
+                display_sub_options(sub_options)
+                sub_option_choice = int(input("You: "))
+                if sub_option_choice in sub_options:
+                    chosen_sub_option = sub_options[sub_option_choice]
+                    if isinstance(chosen_sub_option, list):
+                        print(f"TravelBot: You chose '{chosen_sub_option[0]}'. How can I assist you with that?")
+                    elif isinstance(chosen_sub_option, str):
+                        if chosen_sub_option == "Back to main options":
+                            break
+                        elif chosen_sub_option == "Yes, I want to contact an agent":
+                            print("TravelBot: Connecting you to an agent...")
+                        elif chosen_sub_option == "No, I'm satisfied with the response":
+                            print("TravelBot: Thank you for using our services. Have a great day!")
+                            break
+                else:
+                    print("TravelBot: Invalid sub-option choice. Please select a valid sub-option.")
+
+        else:
+            print("TravelBot: I'm sorry, I don't understand that choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
